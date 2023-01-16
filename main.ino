@@ -31,7 +31,7 @@ Keypad keypad = Keypad(makeKeymap(keys), rowPins, colPins, NUM_ROWS, NUM_COLS);
 #define REVOLUTION 1600L
 #define GEARREDUCTION 90L
 
-U8G2_ST7920_128X64_1_SW_SPI u8g2(U8G2_R0, /* clock=*/ 13, /* data=*/ 11, /* CS=*/ 10);
+U8G2_ST7920_128X64_1_SW_SPI u8g2(U8G2_R0, 13, 11, 10);
 
 long stepsRotaryTableRotation = REVOLUTION * GEARREDUCTION;
 
@@ -44,15 +44,81 @@ long degreesToSteps(double degrees) {
 }
 
 void fillCircleSegment(float angle, int cx, int cy, int radius) {
-  float angle_rad = (90 - angle) * M_PI / 180;
-  float m = (radius * sin(angle_rad)) / (radius * cos(angle_rad));
+  u8g2.drawCircle(cx, cy, radius);
 
-  for (int x=0; x<radius; x++) {
-    int y = round(m * x);
+  if (angle >= 0 && angle < 90) {
+    if (angle == 0) {
+      u8g2.drawLine(cx, cy, cx, cy - radius);
+      return;
+    }
 
-    for (int y2=y; y2<radius; y2++) {
-      if (x*x + y2*y2 < radius * radius) {
-        u8g2.drawPixel(x + cx, y2 + cy);
+    float angle_rad = (90 - angle) * M_PI / 180;
+    float m = (radius * sin(angle_rad)) / (radius * cos(angle_rad));
+
+    for (int x=0; x<radius; x++) {
+      int y = round(m * x);
+
+      for (int y2=y; y2<radius; y2++) {
+        if (x*x + y2*y2 < radius * radius) {
+          u8g2.drawPixel(x + cx, -y2 + cy);
+        }
+      }
+    }
+  } else if (angle >= 90 && angle < 180) {
+    u8g2.drawDisc(cx, cy, radius, U8G2_DRAW_UPPER_RIGHT);
+
+    if (angle == 90) {
+      return;
+    }
+
+    float angle_rad = (angle - 90) * M_PI / 180;
+    float m = (radius * sin(angle_rad)) / (radius * cos(angle_rad));
+
+    for (int x=0; x<radius; x++) {
+      int y = round(m * x);
+
+      for (int y2=y; y2>0; y2--) {
+        if (x*x + y2*y2 < radius * radius) {
+          u8g2.drawPixel(x + cx, y2 + cy);
+        }
+      }
+    }
+  } else if (angle >= 180 && angle < 270) {
+    u8g2.drawDisc(cx, cy, radius, U8G2_DRAW_UPPER_RIGHT | U8G2_DRAW_LOWER_RIGHT);
+
+    if (angle == 180) {
+      return;
+    }
+
+    float angle_rad = (270 - angle) * M_PI / 180;
+    float m = (radius * sin(angle_rad)) / (radius * cos(angle_rad));
+
+    for (int x=0; x<radius; x++) {
+      int y = round(m * x);
+
+      for (int y2=y; y2<radius; y2++) {
+        if (x*x + y2*y2 < radius * radius) {
+          u8g2.drawPixel(-x + cx, y2 + cy);
+        }
+      }
+    }
+  } else {
+    u8g2.drawDisc(cx, cy, radius, U8G2_DRAW_UPPER_RIGHT | U8G2_DRAW_LOWER_RIGHT | U8G2_DRAW_LOWER_LEFT);
+
+    if (angle == 270) {
+      return;
+    }
+
+    float angle_rad = (angle - 270) * M_PI / 180;
+    float m = (radius * sin(angle_rad)) / (radius * cos(angle_rad));
+
+    for (int x=0; x<radius; x++) {
+      int y = round(m * x);
+
+      for (int y2=y; y2>0; y2--) {
+        if (x*x + y2*y2 < radius * radius) {
+          u8g2.drawPixel(-x + cx, -y2 + cy);
+        }
       }
     }
   }
