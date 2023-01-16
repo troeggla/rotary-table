@@ -43,6 +43,21 @@ long degreesToSteps(double degrees) {
   return round(degrees * (stepsRotaryTableRotation / 360));
 }
 
+void fillCircleSegment(float angle, int cx, int cy, int radius) {
+  float angle_rad = (90 - angle) * M_PI / 180;
+  float m = (radius * sin(angle_rad)) / (radius * cos(angle_rad));
+
+  for (int x=0; x<radius; x++) {
+    int y = round(m * x);
+
+    for (int y2=y; y2<radius; y2++) {
+      if (x*x + y2*y2 < radius * radius) {
+        u8g2.drawPixel(x + cx, y2 + cy);
+      }
+    }
+  }
+}
+
 void step() {
   digitalWrite(STEPX, HIGH);
   delayMicroseconds(500);
