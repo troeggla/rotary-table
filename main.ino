@@ -1,5 +1,13 @@
 #include <Arduino.h>
 #include <Keypad.h>
+#include <U8g2lib.h>
+
+#ifdef U8X8_HAVE_HW_SPI
+#include <SPI.h>
+#endif
+#ifdef U8X8_HAVE_HW_I2C
+#include <Wire.h>
+#endif
 
 #define NUM_ROWS 4
 #define NUM_COLS 4
@@ -22,6 +30,8 @@ Keypad keypad = Keypad(makeKeymap(keys), rowPins, colPins, NUM_ROWS, NUM_COLS);
 
 #define REVOLUTION 1600L
 #define GEARREDUCTION 90L
+
+U8G2_ST7920_128X64_1_SW_SPI u8g2(U8G2_R0, /* clock=*/ 13, /* data=*/ 11, /* CS=*/ 10);
 
 long stepsRotaryTableRotation = REVOLUTION * GEARREDUCTION;
 
@@ -56,6 +66,10 @@ void drawToScreen(char c) {
 }
 
 void setup() {
+  Serial.begin(115200);
+
+  u8g2.begin();
+
   pinMode(ENABLE, OUTPUT);
   pinMode(STEPX, OUTPUT);
   pinMode(DIRX, OUTPUT);
