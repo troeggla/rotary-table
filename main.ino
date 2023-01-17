@@ -10,14 +10,11 @@
 #include <Wire.h>
 #endif
 
-#define NUM_ROWS 4
-#define NUM_COLS 4
-
-#define STEP 23
-#define DIR 24
-
 #define REVOLUTION 1600L
 #define GEARREDUCTION 90L
+
+#define NUM_ROWS 4
+#define NUM_COLS 4
 
 const char keys[NUM_ROWS][NUM_COLS] = {
   {'1', '2', '3', 'O'},
@@ -30,7 +27,7 @@ byte rowPins[NUM_ROWS] = {2, 3, 4, 5};
 byte colPins[NUM_COLS] = {6, 7, 8, 9};
 
 Keypad keypad = Keypad(makeKeymap(keys), rowPins, colPins, NUM_ROWS, NUM_COLS);
-AccelStepper stepper = AccelStepper(1, STEP, DIR);
+AccelStepper stepper = AccelStepper(1, 14, 15);
 U8G2_ST7920_128X64_1_SW_SPI u8g2(U8G2_R0, 13, 11, 10);
 
 long stepsRotaryTableRotation = REVOLUTION * GEARREDUCTION;
