@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include <Keypad.h>
 #include <U8g2lib.h>
+#include <AccelStepper.h>
 
 #ifdef U8X8_HAVE_HW_SPI
 #include <SPI.h>
@@ -11,6 +12,12 @@
 
 #define NUM_ROWS 4
 #define NUM_COLS 4
+
+#define STEP 23
+#define DIR 24
+
+#define REVOLUTION 1600L
+#define GEARREDUCTION 90L
 
 const char keys[NUM_ROWS][NUM_COLS] = {
   {'1', '2', '3', 'O'},
@@ -23,14 +30,7 @@ byte rowPins[NUM_ROWS] = {2, 3, 4, 5};
 byte colPins[NUM_COLS] = {6, 7, 8, 9};
 
 Keypad keypad = Keypad(makeKeymap(keys), rowPins, colPins, NUM_ROWS, NUM_COLS);
-
-#define ENABLE 8
-#define STEPX 2
-#define DIRX 5
-
-#define REVOLUTION 1600L
-#define GEARREDUCTION 90L
-
+AccelStepper stepper = AccelStepper(1, STEP, DIR);
 U8G2_ST7920_128X64_1_SW_SPI u8g2(U8G2_R0, 13, 11, 10);
 
 long stepsRotaryTableRotation = REVOLUTION * GEARREDUCTION;
@@ -124,39 +124,35 @@ void fillCircleSegment(float angle, int cx, int cy, int radius) {
   }
 }
 
-void step() {
-  digitalWrite(STEPX, HIGH);
-  delayMicroseconds(500);
+void runStepper(long steps) {
+  stepper.setSpeed(1000);
+  stepper.moveTo(steps);
 
-  digitalWrite(STEPX, LOW);
-  delayMicroseconds(500);
+  while (stepper.distanceToGo() > 0) {
+    stepper.run();
+  }
+
+  stepper.setCurrentPosition(0);
 }
 
-void drawToScreen(char c) {
+void drawToScreen(char c, float angle) {
   u8g2.firstPage();
   do {
     u8g2.setFont(u8g2_font_ncenB14_tr);
 
-    String keyPress = "Key: " + String(c);
+    String keyPress = "Key: " + String(angle);
     u8g2.drawStr(0, 14, keyPress.c_str());
 
-    u8g2.drawCircle(22, 42, 20);
-    u8g2.drawDisc(22, 42, 20, U8G2_DRAW_UPPER_LEFT | U8G2_DRAW_UPPER_RIGHT | U8G2_DRAW_LOWER_LEFT);
-    fillCircleSegment(75, 22, 42, 20);
+    fillCircleSegment(angle, 22, 42, 20);
   } while(u8g2.nextPage());
 }
 
 void setup() {
   Serial.begin(115200);
-
   u8g2.begin();
 
-  pinMode(ENABLE, OUTPUT);
-  pinMode(STEPX, OUTPUT);
-  pinMode(DIRX, OUTPUT);
-
-  digitalWrite(ENABLE, LOW);
-  digitalWrite(DIRX, HIGH);
+  stepper.setMaxSpeed(1500);
+  stepper.setAcceleration(200);
 }
 
 void loop() {
@@ -168,5 +164,4 @@ void loop() {
 
     drawToScreen(key);
   }
-
 }
