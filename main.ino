@@ -10,8 +10,15 @@
 #include <Wire.h>
 #endif
 
+#define DRV_STEP A0
+#define DRV_DIR A1
+
 #define REVOLUTION 1600L
 #define GEARREDUCTION 90L
+
+#define LCD_CLK 13
+#define LCD_DATA 11
+#define LCD_CS 10
 
 #define NUM_ROWS 4
 #define NUM_COLS 4
@@ -27,8 +34,8 @@ byte rowPins[NUM_ROWS] = {2, 3, 4, 5};
 byte colPins[NUM_COLS] = {6, 7, 8, 9};
 
 Keypad keypad = Keypad(makeKeymap(keys), rowPins, colPins, NUM_ROWS, NUM_COLS);
-AccelStepper stepper = AccelStepper(1, 14, 15);
-U8G2_ST7920_128X64_1_SW_SPI u8g2(U8G2_R0, 13, 11, 10);
+AccelStepper stepper = AccelStepper(1, DRV_STEP, DRV_DIR);
+U8G2_ST7920_128X64_1_SW_SPI u8g2(U8G2_R0, LCD_CLK, LCD_DATA, LCD_CS);
 
 long stepsRotaryTableRotation = REVOLUTION * GEARREDUCTION;
 
