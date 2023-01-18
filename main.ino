@@ -50,6 +50,10 @@ long degreesToSteps(double degrees) {
 void fillCircleSegment(float angle, int cx, int cy, int radius) {
   u8g2.drawCircle(cx, cy, radius);
 
+  while (angle >= 360) {
+    angle -= 360;
+  }
+
   if (angle >= 0 && angle < 90) {
     if (angle == 0) {
       u8g2.drawLine(cx, cy, cx, cy - radius);
