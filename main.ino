@@ -43,7 +43,7 @@ void runStepper(long steps) {
   stepper.setSpeed(1000);
   stepper.moveTo(steps);
 
-  while (stepper.distanceToGo() > 0) {
+  while (stepper.distanceToGo() != 0) {
     stepper.run();
   }
 
@@ -52,29 +52,27 @@ void runStepper(long steps) {
 
 void setup() {
   Serial.begin(115200);
+
   screen.initialize();
+  screen.draw();
 
   stepper.setMaxSpeed(1500);
   stepper.setAcceleration(200);
 }
 
 void loop() {
-  float angle = 0;
-  screen.draw();
+  char key = keypad.getKey();
 
-  while (angle < 360) {
-    screen.setDirection(Direction::FWD);
+  if (key == '<' || key == '>') {
+    screen.setDirection((key == '<') ? Direction::BWD : Direction::FWD);
     screen.setBusy();
     screen.draw();
 
     long steps = degreesToSteps(increment);
-    runStepper(steps);
+    runStepper((key == '<') ? -steps : steps);
 
     screen.updateDisplayedAngle();
     screen.setReady();
     screen.draw();
-
-    delay(2000);
-    angle += increment;
   }
 }
