@@ -40,6 +40,8 @@ class MainScreen : public Screen {
   int radius = 20;
   int cx = 22;
   int cy = 22;
+  bool isBusy = false;
+  Direction direction = Direction::FWD;
   float angleIncrement;
 
   void fillCircleSegment();
@@ -51,6 +53,8 @@ public:
 
   void advanceDisplayedAngle();
   void reverseDisplayedAngle();
+  void setBusy();
+  void setReady();
 };
 
 #endif

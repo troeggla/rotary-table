@@ -6,6 +6,7 @@ void Screen::initialize() {
 
 void MainScreen::advanceDisplayedAngle() {
   angle += angleIncrement;
+  direction = Direction::FWD;
 
   if (angle >= 360) {
     angle -= 360;
@@ -14,17 +15,26 @@ void MainScreen::advanceDisplayedAngle() {
 
 void MainScreen::reverseDisplayedAngle() {
   angle -= angleIncrement;
+  direction = Direction::BWD;
 
   if (angle < 0) {
     angle = 360 + angle;
   }
 }
 
+void MainScreen::setBusy() {
+  isBusy = true;
+}
+
+void MainScreen::setReady() {
+  isBusy = false;
+}
+
 void MainScreen::draw() {
   u8g2.firstPage();
 
   do {
-    u8g2.setFont(u8g2_font_prospero_bold_nbp_tn);
+    u8g2.setFont(u8g2_font_prospero_bold_nbp_tf);
 
     String angle = String(this->angle);
     int width = u8g2.getStrWidth(angle.c_str());
