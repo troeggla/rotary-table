@@ -29,14 +29,17 @@ class MainScreen : public Screen {
   int cx;
   int cy;
   int radius;
+  float angleIncrement;
 
   void fillCircleSegment();
 
 public:
-  MainScreen(int cx, int cy, int radius) : cx(cx), cy(cy), radius(radius) {}
+  MainScreen(int cx, int cy, int radius, float angleIncrement) :
+    cx(cx), cy(cy), radius(radius), angleIncrement(angleIncrement) {}
 
   virtual void draw();
-  void setAngle(float angle);
+  void advanceDisplayedAngle();
+  void reverseDisplayedAngle();
 };
 
 #endif

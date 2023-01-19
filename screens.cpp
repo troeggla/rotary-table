@@ -4,8 +4,20 @@ void Screen::initialize() {
   u8g2.begin();
 }
 
-void MainScreen::setAngle(float angle) {
-  this->angle = angle;
+void MainScreen::advanceDisplayedAngle() {
+  angle += angleIncrement;
+
+  if (angle >= 360) {
+    angle -= 360;
+  }
+}
+
+void MainScreen::reverseDisplayedAngle() {
+  angle -= angleIncrement;
+
+  if (angle < 0) {
+    angle = 360 + angle;
+  }
 }
 
 void MainScreen::draw() {
@@ -27,10 +39,6 @@ void MainScreen::draw() {
 
 void MainScreen::fillCircleSegment() {
   u8g2.drawCircle(cx, cy, radius);
-
-  while (angle >= 360) {
-    angle -= 360;
-  }
 
   if (angle >= 0 && angle < 90) {
     if (angle == 0) {

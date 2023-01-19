@@ -25,7 +25,7 @@ byte colPins[NUM_COLS] = {6, 7, 8, 9};
 
 Keypad keypad = Keypad(makeKeymap(keys), rowPins, colPins, NUM_ROWS, NUM_COLS);
 AccelStepper stepper = AccelStepper(1, DRV_STEP, DRV_DIR);
-MainScreen screen = MainScreen(22, 25, 20);
+MainScreen screen = MainScreen(22, 25, 20, 60);
 
 long stepsRotaryTableRotation = REVOLUTION * GEARREDUCTION;
 
@@ -66,10 +66,10 @@ void loop() {
     long steps = degreesToSteps(increment);
     runStepper(steps);
 
-    angle += increment;
-    screen.setAngle(angle);
+    screen.advanceDisplayedAngle();
     screen.draw();
 
     delay(1000);
+    angle += increment;
   }
 }
