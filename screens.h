@@ -14,6 +14,17 @@
 #define LCD_DATA 11
 #define LCD_CS 10
 
+typedef enum {
+  DEG,
+  DIV
+} Mode;
+
+typedef enum {
+  FWD,
+  BWD,
+  NONE
+} Direction;
+
 class Screen {
 protected:
   U8G2_ST7920_128X64_1_SW_SPI u8g2 = U8G2_ST7920_128X64_1_SW_SPI(U8G2_R0, LCD_CLK, LCD_DATA, LCD_CS);
