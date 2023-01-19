@@ -24,11 +24,9 @@ void MainScreen::draw() {
   u8g2.firstPage();
 
   do {
-    // u8g2.setFont(u8g2_font_7x13B_mr);
-    // u8g2.setFont(u8g2_font_t0_13_mr);
     u8g2.setFont(u8g2_font_prospero_bold_nbp_tn);
 
-    String angle = String(this->angle);
+    String angle = String(this->angle) + "°";
 
     int width = u8g2.getStrWidth(angle.c_str());
     u8g2.drawStr(22 - width/2, 58, angle.c_str());
