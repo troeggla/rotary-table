@@ -63,13 +63,17 @@ void loop() {
   screen.draw();
 
   while (angle < 360) {
+    screen.setBusy();
+    screen.draw();
+
     long steps = degreesToSteps(increment);
     runStepper(steps);
 
     screen.advanceDisplayedAngle();
+    screen.setReady();
     screen.draw();
 
-    delay(1000);
+    delay(2000);
     angle += increment;
   }
 }
