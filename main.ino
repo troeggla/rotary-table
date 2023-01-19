@@ -63,13 +63,14 @@ void loop() {
   screen.draw();
 
   while (angle < 360) {
+    screen.setDirection(Direction::FWD);
     screen.setBusy();
     screen.draw();
 
     long steps = degreesToSteps(increment);
     runStepper(steps);
 
-    screen.advanceDisplayedAngle();
+    screen.updateDisplayedAngle();
     screen.setReady();
     screen.draw();
 

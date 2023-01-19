@@ -4,22 +4,24 @@ void Screen::initialize() {
   u8g2.begin();
 }
 
-void MainScreen::advanceDisplayedAngle() {
-  angle += angleIncrement;
-  direction = Direction::FWD;
+void MainScreen::updateDisplayedAngle() {
+  if (direction == Direction::FWD) {
+    angle += angleIncrement;
 
-  if (angle >= 360) {
-    angle -= 360;
+    if (angle >= 360) {
+      angle -= 360;
+    }
+  } else if (Direction::BWD) {
+    angle -= angleIncrement;
+
+    if (angle < 0) {
+      angle = 360 + angle;
+    }
   }
 }
 
-void MainScreen::reverseDisplayedAngle() {
-  angle -= angleIncrement;
-  direction = Direction::BWD;
-
-  if (angle < 0) {
-    angle = 360 + angle;
-  }
+void MainScreen::setDirection(Direction direction) {
+  this->direction = direction;
 }
 
 void MainScreen::setBusy() {

@@ -41,7 +41,7 @@ class MainScreen : public Screen {
   int cx = 22;
   int cy = 22;
   bool isBusy = false;
-  Direction direction = Direction::FWD;
+  Direction direction = Direction::NONE;
   float angleIncrement;
 
   void fillCircleSegment();
@@ -51,8 +51,8 @@ public:
 
   virtual void draw();
 
-  void advanceDisplayedAngle();
-  void reverseDisplayedAngle();
+  void updateDisplayedAngle();
+  void setDirection(Direction direction);
   void setBusy();
   void setReady();
 };
