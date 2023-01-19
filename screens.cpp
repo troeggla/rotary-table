@@ -26,12 +26,14 @@ void MainScreen::draw() {
   do {
     u8g2.setFont(u8g2_font_prospero_bold_nbp_tn);
 
-    String angle = String(this->angle) + "°";
-
+    String angle = String(this->angle);
     int width = u8g2.getStrWidth(angle.c_str());
-    u8g2.drawStr(22 - width/2, 58, angle.c_str());
+    u8g2.drawStr(22 - width/2, 59, angle.c_str());
 
     this->fillCircleSegment();
+
+    u8g2.drawVLine(45, 0, 64);
+    u8g2.drawHLine(0, 45, 45);
   } while(u8g2.nextPage());
 }
 
