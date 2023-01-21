@@ -14,6 +14,7 @@ class ValueInputScreen : public Screen {
 public:
   ValueInputScreen(U8G2& u8g2, Keypad& keypad, Mode mode) : Screen(u8g2, keypad), mode(mode) {}
   float getSelectedValue();
+  Mode getMode();
   virtual String getName();
   virtual void draw();
 };

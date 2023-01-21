@@ -51,6 +51,10 @@ void ValueInputScreen::draw() {
   this->updateDisplay();
 }
 
+Mode ValueInputScreen::getMode() {
+  return mode;
+}
+
 float ValueInputScreen::getSelectedValue() {
   if (selectedValue == "") {
     return -1;
