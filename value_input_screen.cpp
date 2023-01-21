@@ -42,6 +42,7 @@ void ValueInputScreen::draw() {
     break;
   case 'C':
     currentValue = "";
+    break;
   case 'R':
     reset = true;
   }
