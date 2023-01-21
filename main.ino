@@ -10,8 +10,8 @@
 #include <Wire.h>
 #endif
 
-#include "nema_stepper.h"
-#include "screen_controller.h"
+#include "stepper/nema_stepper.h"
+#include "controller/screen_controller.h"
 
 #define LCD_CLK 13
 #define LCD_DATA 11

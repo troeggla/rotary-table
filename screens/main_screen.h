@@ -5,8 +5,8 @@
 #include <U8g2lib.h>
 
 #include "../types.h"
+#include "../stepper/nema_stepper.h"
 #include "screen.h"
-#include "nema_stepper.h"
 
 class MainScreen : public Screen {
   float angle = 0;
