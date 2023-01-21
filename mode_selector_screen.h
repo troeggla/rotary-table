@@ -6,6 +6,7 @@
 
 class ModeSelectorScreen : public Screen {
   Mode currentMode = Mode::DIV;
+  Mode selectedMode = Mode::NONE;
   void updateDisplay();
 
 public:

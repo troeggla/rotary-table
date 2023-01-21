@@ -5,14 +5,14 @@ String ModeSelectorScreen::getName() {
 }
 
 Mode ModeSelectorScreen::getSelectedMode() {
-  return currentMode;
+  return selectedMode;
 }
 
 void ModeSelectorScreen::updateDisplay() {
   u8g2.firstPage();
 
   do {
-    u8g2.setFont(u8g2_font_6x13_tr);
+    u8g2.setFont(u8g2_font_prospero_bold_nbp_tf);
 
     String modeStr = "Select Mode";
     int width = u8g2.getStrWidth(modeStr.c_str());
@@ -35,6 +35,10 @@ void ModeSelectorScreen::draw() {
 
   if (key == '>' || key == '<') {
     currentMode = (currentMode == Mode::DIV) ? Mode::DEG : Mode::DIV;
+  }
+
+  if (key == 'O') {
+    selectedMode = currentMode;
   }
 
   this->updateDisplay();
