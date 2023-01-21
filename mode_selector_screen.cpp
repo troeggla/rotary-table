@@ -1,5 +1,9 @@
 #include "mode_selector_screen.h"
 
+String ModeSelectorScreen::getName() {
+  return "ModeSelectorScreen";
+}
+
 Mode ModeSelectorScreen::getSelectedMode() {
   return currentMode;
 }

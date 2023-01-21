@@ -1,5 +1,9 @@
 #include "main_screen.h"
 
+String MainScreen::getName() {
+  return "MainScreen";
+}
+
 void MainScreen::updateDisplayedAngle() {
   if (direction == Direction::FWD) {
     angle += angleIncrement;

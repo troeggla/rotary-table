@@ -33,6 +33,7 @@ class MainScreen : public Screen {
 public:
   MainScreen(U8G2& u8g2, Keypad& keypad, AccelStepper& stepper, long stepsRotaryTableRotation, float angleIncrement) : Screen(u8g2, keypad), stepper(stepper), stepsRotaryTableRotation(stepsRotaryTableRotation), angleIncrement(angleIncrement) {}
   virtual void draw();
+  virtual String getName();
 };
 
 #endif

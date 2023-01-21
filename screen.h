@@ -14,6 +14,7 @@ public:
   virtual ~Screen() {}
 
   virtual void draw() = 0;
+  virtual String getName() = 0;
 };
 
 #endif

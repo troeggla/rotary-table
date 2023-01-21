@@ -1,7 +1,7 @@
 #ifndef TYPES_H
 #define TYPES_H
 
-enum class Mode{
+enum class Mode {
   DEG,
   DIV,
   NONE

@@ -10,8 +10,10 @@ class ModeSelectorScreen : public Screen {
 
 public:
   ModeSelectorScreen(U8G2& u8g2, Keypad& keypad) : Screen(u8g2, keypad) {}
+
   Mode getSelectedMode();
   virtual void draw();
+  virtual String getName();
 };
 
 #endif
