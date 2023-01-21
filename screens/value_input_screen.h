@@ -1,7 +1,7 @@
 #ifndef VALUE_INPUT_SCREEN_H
 #define VALUE_INPUT_SCREEN_H
 
-#include "types.h"
+#include "../types.h"
 #include "screen.h"
 
 class ValueInputScreen : public Screen {
