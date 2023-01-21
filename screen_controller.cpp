@@ -7,6 +7,11 @@ void ScreenController::initialize() {
 }
 
 void ScreenController::draw() {
+  if (currentScreen->isReset()) {
+    delete currentScreen;
+    currentScreen = new ModeSelectorScreen(display, keypad);
+  }
+
   if (currentScreen->getName().compareTo("ModeSelectorScreen") == 0) {
     Mode selectedMode = ((ModeSelectorScreen*)currentScreen)->getSelectedMode();
 
