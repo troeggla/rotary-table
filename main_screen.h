@@ -5,19 +5,8 @@
 #include <U8g2lib.h>
 #include <AccelStepper.h>
 
+#include "types.h"
 #include "screen.h"
-
-enum class Mode{
-  DEG,
-  DIV,
-  NONE
-};
-
-enum class Direction {
-  FWD,
-  BWD,
-  NONE
-};
 
 class MainScreen : public Screen {
   float angle = 0;
