@@ -23,9 +23,6 @@ class MainScreen : public Screen {
   void fillCircleSegment();
   void updateDisplay();
   void updateDisplayedAngle();
-  void setDirection(Direction direction);
-  void setBusy();
-  void setReady();
   void runStepper(long steps);
   long getStepsPerDivision(long numDivisions);
   long degreesToSteps(double degrees);

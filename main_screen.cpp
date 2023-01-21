@@ -20,18 +20,6 @@ void MainScreen::updateDisplayedAngle() {
   }
 }
 
-void MainScreen::setDirection(Direction direction) {
-  this->direction = direction;
-}
-
-void MainScreen::setBusy() {
-  isBusy = true;
-}
-
-void MainScreen::setReady() {
-  isBusy = false;
-}
-
 void MainScreen::runStepper(long steps) {
   stepper.setSpeed(1000);
   stepper.moveTo(steps);
@@ -90,15 +78,15 @@ void MainScreen::draw() {
   char key = keypad.getKey();
 
   if (key == '<' || key == '>') {
-    this->setDirection((key == '<') ? Direction::BWD : Direction::FWD);
-    this->setBusy();
+    direction = (key == '<') ? Direction::BWD : Direction::FWD;
+    isBusy = true;
     this->updateDisplay();
 
     long steps = degreesToSteps(angleIncrement);
     runStepper((key == '<') ? -steps : steps);
 
     this->updateDisplayedAngle();
-    this->setReady();
+    isBusy = false;
     this->updateDisplay();
   } else {
     this->updateDisplay();
