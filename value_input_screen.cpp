@@ -35,13 +35,26 @@ void ValueInputScreen::draw() {
   case '7':
   case '8':
   case '9':
-  case '.':
     currentValue += key;
+    break;
+  case 'O':
+    selectedValue = currentValue;
+    break;
+  case 'C':
+    currentValue = "";
+  }
+
+  if (mode == Mode::DEG && key == '.') {
+    currentValue += ".";
   }
 
   this->updateDisplay();
 }
 
 float ValueInputScreen::getSelectedValue() {
-  return selectedValue;
+  if (selectedValue == "") {
+    return -1;
+  }
+
+  return atof(selectedValue.c_str());
 }

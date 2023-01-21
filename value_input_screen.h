@@ -7,7 +7,7 @@
 class ValueInputScreen : public Screen {
   Mode mode;
   String currentValue;
-  float selectedValue = -1;
+  String selectedValue = "";
 
   void updateDisplay();
 
