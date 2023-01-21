@@ -43,7 +43,7 @@ void MainScreen::updateDisplay() {
   u8g2.firstPage();
 
   do {
-    u8g2.setFont(u8g2_font_prospero_bold_nbp_tf);
+    u8g2.setFont(u8g2_font_6x13_tr);
 
     String angle = String(this->angle);
     int width = u8g2.getStrWidth(angle.c_str());

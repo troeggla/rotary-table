@@ -12,7 +12,7 @@ void ModeSelectorScreen::updateDisplay() {
   u8g2.firstPage();
 
   do {
-    u8g2.setFont(u8g2_font_prospero_bold_nbp_tf);
+    u8g2.setFont(u8g2_font_6x13_tr);
 
     String modeStr = "Select Mode";
     int width = u8g2.getStrWidth(modeStr.c_str());
