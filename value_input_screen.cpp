@@ -42,6 +42,8 @@ void ValueInputScreen::draw() {
     break;
   case 'C':
     currentValue = "";
+  case 'R':
+    reset = true;
   }
 
   if (mode == Mode::DEG && key == '.') {

@@ -77,6 +77,10 @@ void MainScreen::updateDisplay() {
 void MainScreen::draw() {
   char key = keypad.getKey();
 
+  if (key == 'R') {
+    reset = true;
+  }
+
   if (key == '<' || key == '>') {
     direction = (key == '<') ? Direction::BWD : Direction::FWD;
     isBusy = true;
