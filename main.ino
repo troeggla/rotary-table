@@ -42,11 +42,8 @@ AccelStepper stepper = AccelStepper(1, DRV_STEP, DRV_DIR);
 ScreenController controller = ScreenController(u8g2, keypad, stepper, REVOLUTION * GEARREDUCTION);
 
 void setup() {
-  Serial.begin(115200);
-
   controller.initialize();
   controller.draw();
-
 }
 
 void loop() {
