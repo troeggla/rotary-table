@@ -1,7 +1,4 @@
 #include <Arduino.h>
-#include <Keypad.h>
-#include <AccelStepper.h>
-
 #include "screens.h"
 
 #define DRV_STEP A0
@@ -24,55 +21,19 @@ byte rowPins[NUM_ROWS] = {2, 3, 4, 5};
 byte colPins[NUM_COLS] = {6, 7, 8, 9};
 
 Keypad keypad = Keypad(makeKeymap(keys), rowPins, colPins, NUM_ROWS, NUM_COLS);
+U8G2_ST7920_128X64_1_SW_SPI u8g2 = U8G2_ST7920_128X64_1_SW_SPI(U8G2_R0, LCD_CLK, LCD_DATA, LCD_CS);
 AccelStepper stepper = AccelStepper(1, DRV_STEP, DRV_DIR);
 
-float increment = 15;
-MainScreen screen = MainScreen(increment);
-
-long stepsRotaryTableRotation = REVOLUTION * GEARREDUCTION;
-
-long getStepsPerDivision(long numDivisions) {
-  return round(stepsRotaryTableRotation / numDivisions);
-}
-
-long degreesToSteps(double degrees) {
-  return round(degrees * (stepsRotaryTableRotation / 360));
-}
-
-void runStepper(long steps) {
-  stepper.setSpeed(1000);
-  stepper.moveTo(steps);
-
-  while (stepper.distanceToGo() != 0) {
-    stepper.run();
-  }
-
-  stepper.setCurrentPosition(0);
-}
+ScreenController controller = ScreenController(u8g2, keypad, stepper, REVOLUTION * GEARREDUCTION);
 
 void setup() {
   Serial.begin(115200);
 
-  screen.initialize();
-  screen.draw();
+  controller.initialize();
+  controller.draw();
 
-  stepper.setMaxSpeed(1500);
-  stepper.setAcceleration(200);
 }
 
 void loop() {
-  char key = keypad.getKey();
-
-  if (key == '<' || key == '>') {
-    screen.setDirection((key == '<') ? Direction::BWD : Direction::FWD);
-    screen.setBusy();
-    screen.draw();
-
-    long steps = degreesToSteps(increment);
-    runStepper((key == '<') ? -steps : steps);
-
-    screen.updateDisplayedAngle();
-    screen.setReady();
-    screen.draw();
-  }
+  controller.draw();
 }

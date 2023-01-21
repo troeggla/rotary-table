@@ -1,7 +1,13 @@
 #include "screens.h"
 
-void Screen::initialize() {
-  u8g2.begin();
+void ScreenController::initialize() {
+  stepper.setMaxSpeed(1500);
+  stepper.setAcceleration(400);
+  display.begin();
+}
+
+void ScreenController::draw() {
+  currentScreen->draw();
 }
 
 void MainScreen::updateDisplayedAngle() {
@@ -32,7 +38,26 @@ void MainScreen::setReady() {
   isBusy = false;
 }
 
-void MainScreen::draw() {
+void MainScreen::runStepper(long steps) {
+  stepper.setSpeed(1000);
+  stepper.moveTo(steps);
+
+  while (stepper.distanceToGo() != 0) {
+    stepper.run();
+  }
+
+  stepper.setCurrentPosition(0);
+}
+
+long MainScreen::getStepsPerDivision(long numDivisions) {
+  return round(stepsRotaryTableRotation / numDivisions);
+}
+
+long MainScreen::degreesToSteps(double degrees) {
+  return round(degrees * (stepsRotaryTableRotation / 360));
+}
+
+void MainScreen::updateDisplay() {
   u8g2.firstPage();
 
   do {
@@ -65,6 +90,25 @@ void MainScreen::draw() {
 
     u8g2.drawHLine(46, 16, 82);
   } while(u8g2.nextPage());
+}
+
+void MainScreen::draw() {
+  char key = keypad.getKey();
+
+  if (key == '<' || key == '>') {
+    this->setDirection((key == '<') ? Direction::BWD : Direction::FWD);
+    this->setBusy();
+    this->updateDisplay();
+
+    long steps = degreesToSteps(angleIncrement);
+    runStepper((key == '<') ? -steps : steps);
+
+    this->updateDisplayedAngle();
+    this->setReady();
+    this->updateDisplay();
+  } else {
+    this->updateDisplay();
+  }
 }
 
 void MainScreen::fillCircleSegment() {

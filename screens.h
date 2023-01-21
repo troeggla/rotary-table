@@ -1,6 +1,8 @@
 #ifndef SCREENS_H
 #define SCREENS_H
 
+#include <AccelStepper.h>
+#include <Keypad.h>
 #include <U8g2lib.h>
 
 #ifdef U8X8_HAVE_HW_SPI
@@ -16,22 +18,25 @@
 
 typedef enum {
   DEG,
-  DIV
+  DIV,
+  NONE
 } Mode;
 
 typedef enum {
   FWD,
   BWD,
-  NONE
+  UNKNOWN
 } Direction;
 
 class Screen {
 protected:
-  U8G2_ST7920_128X64_1_SW_SPI u8g2 = U8G2_ST7920_128X64_1_SW_SPI(U8G2_R0, LCD_CLK, LCD_DATA, LCD_CS);
+  U8G2& u8g2;
+  Keypad& keypad;
 
 public:
+  Screen(U8G2& u8g2, Keypad& keypad): u8g2(u8g2), keypad(keypad) {}
   virtual ~Screen() {}
-  void initialize();
+
   virtual void draw() = 0;
 };
 
@@ -41,20 +46,45 @@ class MainScreen : public Screen {
   int cx = 22;
   int cy = 22;
   bool isBusy = false;
-  Direction direction = Direction::NONE;
+  AccelStepper& stepper;
+  long stepsRotaryTableRotation;
   float angleIncrement;
 
+  Direction direction = Direction::UNKNOWN;
+
   void fillCircleSegment();
-
-public:
-  MainScreen(float angleIncrement) : angleIncrement(angleIncrement) {}
-
-  virtual void draw();
-
+  void updateDisplay();
   void updateDisplayedAngle();
   void setDirection(Direction direction);
   void setBusy();
   void setReady();
+  void runStepper(long steps);
+  long getStepsPerDivision(long numDivisions);
+  long degreesToSteps(double degrees);
+
+public:
+  MainScreen(U8G2& u8g2, Keypad& keypad, AccelStepper& stepper, long stepsRotaryTableRotation, float angleIncrement) : Screen(u8g2, keypad), stepper(stepper), stepsRotaryTableRotation(stepsRotaryTableRotation), angleIncrement(angleIncrement) {}
+  virtual void draw();
+};
+
+class ScreenController {
+  U8G2& display;
+  Keypad& keypad;
+  AccelStepper& stepper;
+
+  Screen* currentScreen;
+
+public:
+  ScreenController(U8G2& display, Keypad& keypad, AccelStepper& stepper, long stepsRotaryTableRotation) : display(display), keypad(keypad), stepper(stepper) {
+    currentScreen = new MainScreen(display, keypad, stepper, stepsRotaryTableRotation, 30);
+  }
+
+  ~ScreenController() {
+    delete currentScreen;
+  }
+
+  void initialize();
+  void draw();
 };
 
 #endif
