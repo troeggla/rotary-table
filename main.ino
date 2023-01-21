@@ -10,6 +10,7 @@
 #include <Wire.h>
 #endif
 
+#include "nema_stepper.h"
 #include "screen_controller.h"
 
 #define LCD_CLK 13
@@ -37,13 +38,12 @@ byte colPins[NUM_COLS] = {6, 7, 8, 9};
 
 Keypad keypad = Keypad(makeKeymap(keys), rowPins, colPins, NUM_ROWS, NUM_COLS);
 U8G2_ST7920_128X64_1_SW_SPI u8g2 = U8G2_ST7920_128X64_1_SW_SPI(U8G2_R0, LCD_CLK, LCD_DATA, LCD_CS);
-AccelStepper stepper = AccelStepper(1, DRV_STEP, DRV_DIR);
+NemaStepper stepper = NemaStepper(DRV_STEP, DRV_DIR, REVOLUTION * GEARREDUCTION);
 
-ScreenController controller = ScreenController(u8g2, keypad, stepper, REVOLUTION * GEARREDUCTION);
+ScreenController controller = ScreenController(u8g2, keypad, stepper);
 
 void setup() {
   controller.initialize();
-  controller.draw();
 }
 
 void loop() {

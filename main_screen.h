@@ -3,10 +3,10 @@
 
 #include <Arduino.h>
 #include <U8g2lib.h>
-#include <AccelStepper.h>
 
 #include "types.h"
 #include "screen.h"
+#include "nema_stepper.h"
 
 class MainScreen : public Screen {
   float angle = 0;
@@ -14,9 +14,8 @@ class MainScreen : public Screen {
   int cx = 22;
   int cy = 22;
   bool isBusy = false;
-  AccelStepper& stepper;
+  NemaStepper& stepper;
   Mode mode;
-  long stepsRotaryTableRotation;
   float increment;
   float angleIncrement;
 
@@ -25,16 +24,12 @@ class MainScreen : public Screen {
   void fillCircleSegment();
   void updateDisplay();
   void updateDisplayedAngle();
-  void runStepper(long steps);
-  long getStepsPerDivision(long numDivisions);
-  long degreesToSteps(double degrees);
 
 public:
-  MainScreen(U8G2& u8g2, Keypad& keypad, AccelStepper& stepper, Mode mode, long stepsRotaryTableRotation, float increment) :
+  MainScreen(U8G2& u8g2, Keypad& keypad, NemaStepper& stepper, Mode mode, float increment) :
     Screen(u8g2, keypad),
     stepper(stepper),
     mode(mode),
-    stepsRotaryTableRotation(stepsRotaryTableRotation),
     increment(increment) {
     if (mode == Mode::DEG) {
       angleIncrement = increment;

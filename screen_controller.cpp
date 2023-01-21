@@ -1,8 +1,6 @@
 #include "screen_controller.h"
 
 void ScreenController::initialize() {
-  stepper.setMaxSpeed(1500);
-  stepper.setAcceleration(400);
   display.begin();
 }
 
@@ -27,7 +25,7 @@ void ScreenController::draw() {
 
     if (selectedValue != -1) {
       delete currentScreen;
-      currentScreen = new MainScreen(display, keypad, stepper, mode, stepsRotaryTableRotation, selectedValue);
+      currentScreen = new MainScreen(display, keypad, stepper, mode, selectedValue);
     }
   }
 

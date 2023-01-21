@@ -20,25 +20,6 @@ void MainScreen::updateDisplayedAngle() {
   }
 }
 
-void MainScreen::runStepper(long steps) {
-  stepper.setSpeed(1000);
-  stepper.moveTo(steps);
-
-  while (stepper.distanceToGo() != 0) {
-    stepper.run();
-  }
-
-  stepper.setCurrentPosition(0);
-}
-
-long MainScreen::getStepsPerDivision(long numDivisions) {
-  return round(stepsRotaryTableRotation / numDivisions);
-}
-
-long MainScreen::degreesToSteps(double degrees) {
-  return round(degrees * (stepsRotaryTableRotation / 360));
-}
-
 void MainScreen::updateDisplay() {
   u8g2.firstPage();
 
@@ -86,13 +67,11 @@ void MainScreen::draw() {
     isBusy = true;
     this->updateDisplay();
 
-    long steps = (mode == Mode::DEG) ? (
-      degreesToSteps(increment)
-    ): (
-      getStepsPerDivision((long)increment)
-    );
-
-    runStepper((key == '<') ? -steps : steps);
+    if (mode == Mode::DEG) {
+      stepper.runDegrees(increment);
+    } else {
+      stepper.runDegrees(360 / increment);
+    }
 
     this->updateDisplayedAngle();
     isBusy = false;
