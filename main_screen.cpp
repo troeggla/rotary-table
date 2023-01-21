@@ -82,7 +82,12 @@ void MainScreen::draw() {
     isBusy = true;
     this->updateDisplay();
 
-    long steps = degreesToSteps(angleIncrement);
+    long steps = (mode == Mode::DEG) ? (
+      degreesToSteps(increment)
+    ): (
+      getStepsPerDivision((long)increment)
+    );
+
     runStepper((key == '<') ? -steps : steps);
 
     this->updateDisplayedAngle();

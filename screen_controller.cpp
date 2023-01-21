@@ -18,10 +18,11 @@ void ScreenController::draw() {
 
   if (currentScreen->getName().compareTo("ValueInputScreen") == 0) {
     float selectedValue = ((ValueInputScreen*)currentScreen)->getSelectedValue();
+    Mode mode = ((ValueInputScreen*)currentScreen)->getMode();
 
     if (selectedValue != -1) {
       delete currentScreen;
-      currentScreen = new MainScreen(display, keypad, stepper, stepsRotaryTableRotation, selectedValue);
+      currentScreen = new MainScreen(display, keypad, stepper, mode, stepsRotaryTableRotation, selectedValue);
     }
   }
 

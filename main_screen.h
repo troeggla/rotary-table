@@ -15,7 +15,9 @@ class MainScreen : public Screen {
   int cy = 22;
   bool isBusy = false;
   AccelStepper& stepper;
+  Mode mode;
   long stepsRotaryTableRotation;
+  float increment;
   float angleIncrement;
 
   Direction direction = Direction::NONE;
@@ -28,7 +30,19 @@ class MainScreen : public Screen {
   long degreesToSteps(double degrees);
 
 public:
-  MainScreen(U8G2& u8g2, Keypad& keypad, AccelStepper& stepper, long stepsRotaryTableRotation, float angleIncrement) : Screen(u8g2, keypad), stepper(stepper), stepsRotaryTableRotation(stepsRotaryTableRotation), angleIncrement(angleIncrement) {}
+  MainScreen(U8G2& u8g2, Keypad& keypad, AccelStepper& stepper, Mode mode, long stepsRotaryTableRotation, float increment) :
+    Screen(u8g2, keypad),
+    stepper(stepper),
+    mode(mode),
+    stepsRotaryTableRotation(stepsRotaryTableRotation),
+    increment(increment) {
+    if (mode == Mode::DEG) {
+      angleIncrement = increment;
+    } else {
+      angleIncrement = 360 / increment;
+    }
+  }
+
   virtual void draw();
   virtual String getName();
 };
