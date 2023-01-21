@@ -9,11 +9,12 @@ class ScreenController {
   U8G2& display;
   Keypad& keypad;
   AccelStepper& stepper;
+  long stepsRotaryTableRotation;
 
   Screen* currentScreen;
 
 public:
-  ScreenController(U8G2& display, Keypad& keypad, AccelStepper& stepper, long stepsRotaryTableRotation) : display(display), keypad(keypad), stepper(stepper) {
+  ScreenController(U8G2& display, Keypad& keypad, AccelStepper& stepper, long stepsRotaryTableRotation) : display(display), keypad(keypad), stepper(stepper), stepsRotaryTableRotation(stepsRotaryTableRotation) {
     // currentScreen = new MainScreen(display, keypad, stepper, stepsRotaryTableRotation, 30);
     currentScreen = new ModeSelectorScreen(display, keypad);
   }
