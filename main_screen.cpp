@@ -1,14 +1,4 @@
-#include "screens.h"
-
-void ScreenController::initialize() {
-  stepper.setMaxSpeed(1500);
-  stepper.setAcceleration(400);
-  display.begin();
-}
-
-void ScreenController::draw() {
-  currentScreen->draw();
-}
+#include "main_screen.h"
 
 void MainScreen::updateDisplayedAngle() {
   if (direction == Direction::FWD) {
@@ -17,7 +7,7 @@ void MainScreen::updateDisplayedAngle() {
     if (angle >= 360) {
       angle -= 360;
     }
-  } else if (Direction::BWD) {
+  } else if (direction == Direction::BWD) {
     angle -= angleIncrement;
 
     if (angle < 0) {

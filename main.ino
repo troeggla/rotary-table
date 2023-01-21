@@ -1,5 +1,20 @@
 #include <Arduino.h>
-#include "screens.h"
+#include <AccelStepper.h>
+#include <Keypad.h>
+#include <U8g2lib.h>
+
+#ifdef U8X8_HAVE_HW_SPI
+#include <SPI.h>
+#endif
+#ifdef U8X8_HAVE_HW_I2C
+#include <Wire.h>
+#endif
+
+#include "screen_controller.h"
+
+#define LCD_CLK 13
+#define LCD_DATA 11
+#define LCD_CS 10
 
 #define DRV_STEP A0
 #define DRV_DIR A1
