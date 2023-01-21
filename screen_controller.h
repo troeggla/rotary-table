@@ -4,6 +4,7 @@
 #include "screen.h"
 #include "main_screen.h"
 #include "mode_selector_screen.h"
+#include "value_input_screen.h"
 
 class ScreenController {
   U8G2& display;
