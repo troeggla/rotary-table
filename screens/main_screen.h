@@ -4,7 +4,7 @@
 #include <Arduino.h>
 #include <U8g2lib.h>
 
-#include "../types.h"
+#include "../util/types.h"
 #include "../stepper/nema_stepper.h"
 #include "screen.h"
 

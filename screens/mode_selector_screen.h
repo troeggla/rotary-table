@@ -1,7 +1,7 @@
 #ifndef MODE_SELECTOR_SCREEN_H
 #define MODE_SELECTOR_SCREEN_H
 
-#include "../types.h"
+#include "../util/types.h"
 #include "screen.h"
 
 class ModeSelectorScreen : public Screen {
