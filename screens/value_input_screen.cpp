@@ -63,5 +63,17 @@ float ValueInputScreen::getSelectedValue() {
     return -1;
   }
 
-  return atof(selectedValue.c_str());
+  float parsedValue = atof(selectedValue.c_str());
+
+  if (mode == Mode::DEG) {
+    if (parsedValue <= 0 || parsedValue > 360) {
+      return -1;
+    }
+  } else if (mode == Mode::DIV) {
+    if (parsedValue <= 0) {
+      return -1;
+    }
+  }
+
+  return parsedValue;
 }
