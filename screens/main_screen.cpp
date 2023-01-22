@@ -81,7 +81,7 @@ void MainScreen::updateDisplay() {
 void MainScreen::draw() {
   char key = keypad.getKey();
 
-  if (key == 'R') {
+  if (key == KEY_RST) {
     reset = true;
   }
 

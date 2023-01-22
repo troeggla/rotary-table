@@ -10,6 +10,7 @@
 #include <Wire.h>
 #endif
 
+#include "util/types.h"
 #include "stepper/nema_stepper.h"
 #include "controller/screen_controller.h"
 
@@ -27,9 +28,9 @@
 #define NUM_COLS 4
 
 const char keys[NUM_ROWS][NUM_COLS] = {
-  {'1', '2', '3', 'O'},
-  {'4', '5', '6', 'C'},
-  {'7', '8', '9', 'R'},
+  {'1', '2', '3', KEY_OK},
+  {'4', '5', '6', KEY_CLR},
+  {'7', '8', '9', KEY_RST},
   {'<', '0', '>', '.'}
 };
 

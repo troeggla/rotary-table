@@ -37,13 +37,13 @@ void ValueInputScreen::draw() {
   case '9':
     currentValue += key;
     break;
-  case 'O':
+  case KEY_OK:
     selectedValue = currentValue;
     break;
-  case 'C':
+  case KEY_CLR:
     currentValue = "";
     break;
-  case 'R':
+  case KEY_RST:
     reset = true;
   }
 

@@ -37,7 +37,7 @@ void ModeSelectorScreen::draw() {
     currentMode = (currentMode == Mode::DIV) ? Mode::DEG : Mode::DIV;
   }
 
-  if (key == 'O') {
+  if (key == KEY_OK) {
     selectedMode = currentMode;
   }
 
