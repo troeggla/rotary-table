@@ -52,6 +52,29 @@ void MainScreen::updateDisplay() {
     }
 
     u8g2.drawHLine(46, 16, 82);
+
+    u8g2.drawStr(49, 29, "MODE:");
+    u8g2.drawStr(90, 29, (mode == Mode::DEG) ? "DEG" : "DIV");
+
+    u8g2.drawHLine(46, 32, 82);
+
+    u8g2.drawStr(49, 45, "INC:");
+    u8g2.drawStr(90, 45, String(angleIncrement).c_str());
+
+    u8g2.drawHLine(46, 48, 82);
+    u8g2.drawVLine(85, 16, 32);
+
+    if (mode == Mode::DEG) {
+      int width = u8g2.getStrWidth("-");
+      u8g2.drawStr(87 - width / 2, 61, "-");
+    } else {
+      if (currentDivision >= 0 && currentDivision <= divisions) {
+        String numDivisions = String(currentDivision) + "/" + String(divisions);
+        int width = u8g2.getStrWidth(numDivisions.c_str());
+
+        u8g2.drawStr(87 - width / 2, 61, numDivisions.c_str());
+      }
+    }
   } while(u8g2.nextPage());
 }
 
@@ -63,6 +86,7 @@ void MainScreen::draw() {
   }
 
   if (key == '<' || key == '>') {
+    currentDivision = (key == '<') ? currentDivision - 1 : currentDivision + 1;
     direction = (key == '<') ? Direction::BWD : Direction::FWD;
     isBusy = true;
     this->updateDisplay();

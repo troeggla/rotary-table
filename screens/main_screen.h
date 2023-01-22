@@ -18,6 +18,8 @@ class MainScreen : public Screen {
   Mode mode;
   float increment;
   float angleIncrement;
+  int divisions;
+  int currentDivision = 0;
 
   Direction direction = Direction::NONE;
 
@@ -35,6 +37,7 @@ public:
       angleIncrement = increment;
     } else {
       angleIncrement = 360 / increment;
+      divisions = (int)increment;
     }
   }
 
