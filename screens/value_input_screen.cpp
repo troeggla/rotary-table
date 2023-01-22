@@ -58,12 +58,12 @@ Mode ValueInputScreen::getMode() {
   return mode;
 }
 
-float ValueInputScreen::getSelectedValue() {
+double ValueInputScreen::getSelectedValue() {
   if (selectedValue == "") {
     return -1;
   }
 
-  float parsedValue = atof(selectedValue.c_str());
+  double parsedValue = atof(selectedValue.c_str());
 
   if (mode == Mode::DEG) {
     if (parsedValue <= 0 || parsedValue > 360) {

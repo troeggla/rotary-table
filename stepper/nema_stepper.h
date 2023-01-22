@@ -18,7 +18,7 @@ public:
     stepper.setAcceleration(400);
   }
 
-  void runDegrees(float degrees);
+  void runDegrees(double degrees);
 };
 
 #endif

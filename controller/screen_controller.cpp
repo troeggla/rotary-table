@@ -20,7 +20,7 @@ void ScreenController::draw() {
   }
 
   if (currentScreen->getName().compareTo("ValueInputScreen") == 0) {
-    float selectedValue = ((ValueInputScreen*)currentScreen)->getSelectedValue();
+    double selectedValue = ((ValueInputScreen*)currentScreen)->getSelectedValue();
     Mode mode = ((ValueInputScreen*)currentScreen)->getMode();
 
     if (selectedValue != -1) {

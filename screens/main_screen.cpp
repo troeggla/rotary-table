@@ -106,7 +106,7 @@ void MainScreen::draw() {
 }
 
 void MainScreen::fillCircleSegment() {
-  float angle = round(this->angle * 10.0) / 10.0;
+  double angle = round(this->angle * 10.0) / 10.0;
   u8g2.drawCircle(cx, cy, radius);
 
   if (angle >= 0 && angle < 90) {
@@ -115,8 +115,8 @@ void MainScreen::fillCircleSegment() {
       return;
     }
 
-    float angle_rad = (90 - angle) * M_PI / 180;
-    float m = (radius * sin(angle_rad)) / (radius * cos(angle_rad));
+    double angle_rad = (90 - angle) * M_PI / 180;
+    double m = (radius * sin(angle_rad)) / (radius * cos(angle_rad));
 
     for (int x=0; x<radius; x++) {
       int y = round(m * x);
@@ -134,8 +134,8 @@ void MainScreen::fillCircleSegment() {
       return;
     }
 
-    float angle_rad = (angle - 90) * M_PI / 180;
-    float m = (radius * sin(angle_rad)) / (radius * cos(angle_rad));
+    double angle_rad = (angle - 90) * M_PI / 180;
+    double m = (radius * sin(angle_rad)) / (radius * cos(angle_rad));
 
     for (int x=0; x<radius; x++) {
       int y = round(m * x);
@@ -153,8 +153,8 @@ void MainScreen::fillCircleSegment() {
       return;
     }
 
-    float angle_rad = (270 - angle) * M_PI / 180;
-    float m = (radius * sin(angle_rad)) / (radius * cos(angle_rad));
+    double angle_rad = (270 - angle) * M_PI / 180;
+    double m = (radius * sin(angle_rad)) / (radius * cos(angle_rad));
 
     for (int x=0; x<radius; x++) {
       int y = round(m * x);
@@ -172,8 +172,8 @@ void MainScreen::fillCircleSegment() {
       return;
     }
 
-    float angle_rad = (angle - 270) * M_PI / 180;
-    float m = (radius * sin(angle_rad)) / (radius * cos(angle_rad));
+    double angle_rad = (angle - 270) * M_PI / 180;
+    double m = (radius * sin(angle_rad)) / (radius * cos(angle_rad));
 
     for (int x=0; x<radius; x++) {
       int y = round(m * x);

@@ -11,7 +11,7 @@ void NemaStepper::runStepper(long steps) {
   stepper.setCurrentPosition(0);
 }
 
-void NemaStepper::runDegrees(float degrees) {
+void NemaStepper::runDegrees(double degrees) {
   runStepper(degreesToSteps(degrees));
 }
 

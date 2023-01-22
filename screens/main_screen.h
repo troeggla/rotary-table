@@ -9,15 +9,15 @@
 #include "screen.h"
 
 class MainScreen : public Screen {
-  float angle = 0;
+  double angle = 0;
   int radius = 20;
   int cx = 22;
   int cy = 22;
   bool isBusy = false;
   NemaStepper& stepper;
   Mode mode;
-  float increment;
-  float angleIncrement;
+  double increment;
+  double angleIncrement;
   int divisions;
   int currentDivision = 0;
 
@@ -28,7 +28,7 @@ class MainScreen : public Screen {
   void updateDisplayedAngle();
 
 public:
-  MainScreen(U8G2& u8g2, Keypad& keypad, NemaStepper& stepper, Mode mode, float increment) :
+  MainScreen(U8G2& u8g2, Keypad& keypad, NemaStepper& stepper, Mode mode, double increment) :
     Screen(u8g2, keypad),
     stepper(stepper),
     mode(mode),
