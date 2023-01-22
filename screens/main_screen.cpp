@@ -8,13 +8,17 @@ void MainScreen::updateDisplayedAngle() {
   if (direction == Direction::FWD) {
     angle += angleIncrement;
 
-    if (angle >= 360) {
+    if (mode == Mode::DIV && (currentDivision == divisions || currentDivision == 0)) {
+      angle = 0;
+    } else if (angle >= 360) {
       angle -= 360;
     }
   } else if (direction == Direction::BWD) {
     angle -= angleIncrement;
 
-    if (angle < 0) {
+    if (mode == Mode::DIV && (currentDivision == divisions || currentDivision == 0)) {
+      angle = 0;
+    } else if (angle < 0) {
       angle = 360 + angle;
     }
   }
@@ -106,7 +110,7 @@ void MainScreen::draw() {
 }
 
 void MainScreen::fillCircleSegment() {
-  double angle = round(this->angle * 10.0) / 10.0;
+  double angle = round(this->angle);
   u8g2.drawCircle(cx, cy, radius);
 
   if (angle >= 0 && angle < 90) {
@@ -165,7 +169,7 @@ void MainScreen::fillCircleSegment() {
         }
       }
     }
-  } else {
+  } else if (angle >= 270 && angle < 360) {
     u8g2.drawDisc(cx, cy, radius, U8G2_DRAW_UPPER_RIGHT | U8G2_DRAW_LOWER_RIGHT | U8G2_DRAW_LOWER_LEFT);
 
     if (angle == 270) {
@@ -184,5 +188,7 @@ void MainScreen::fillCircleSegment() {
         }
       }
     }
+  } else {
+    u8g2.drawLine(cx, cy, cx, cy - radius);
   }
 }
