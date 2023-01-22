@@ -1,7 +1,6 @@
 #include "nema_stepper.h"
 
 void NemaStepper::runStepper(long steps) {
-  stepper.setSpeed(1000);
   stepper.moveTo(steps);
 
   while (stepper.distanceToGo() != 0) {
