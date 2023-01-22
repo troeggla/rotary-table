@@ -106,6 +106,7 @@ void MainScreen::draw() {
 }
 
 void MainScreen::fillCircleSegment() {
+  float angle = round(this->angle * 10.0) / 10.0;
   u8g2.drawCircle(cx, cy, radius);
 
   if (angle >= 0 && angle < 90) {
