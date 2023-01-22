@@ -65,8 +65,8 @@ void MainScreen::updateDisplay() {
     u8g2.drawVLine(85, 16, 32);
 
     if (mode == Mode::DEG) {
-      int width = u8g2.getStrWidth("-");
-      u8g2.drawStr(87 - width / 2, 61, "-");
+      int width = u8g2.getStrWidth("-/-");
+      u8g2.drawStr(87 - width / 2, 61, "-/-");
     } else {
       if (currentDivision >= 0 && currentDivision <= divisions) {
         String numDivisions = String(currentDivision) + "/" + String(divisions);
@@ -86,7 +86,6 @@ void MainScreen::draw() {
   }
 
   if (key == '<' || key == '>') {
-    currentDivision = (key == '<') ? currentDivision - 1 : currentDivision + 1;
     direction = (key == '<') ? Direction::BWD : Direction::FWD;
     isBusy = true;
     this->updateDisplay();
@@ -97,6 +96,7 @@ void MainScreen::draw() {
       stepper.runDegrees(360 / increment);
     }
 
+    currentDivision = (key == '<') ? currentDivision - 1 : currentDivision + 1;
     this->updateDisplayedAngle();
     isBusy = false;
     this->updateDisplay();
