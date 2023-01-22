@@ -95,9 +95,10 @@ void MainScreen::draw() {
     this->updateDisplay();
 
     if (mode == Mode::DEG) {
-      stepper.runDegrees(increment);
+      stepper.runDegrees((direction == Direction::BWD) ? -increment : increment);
     } else {
-      stepper.runDegrees(360 / increment);
+      double degrees = 360 / increment;
+      stepper.runDegrees((direction == Direction:: BWD) ? -degrees : degrees);
     }
 
     currentDivision = (key == '<') ? currentDivision - 1 : currentDivision + 1;
