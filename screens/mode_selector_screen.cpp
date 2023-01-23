@@ -20,12 +20,12 @@ void ModeSelectorScreen::updateDisplay() {
     u8g2.drawStr(128/2 - width/2, 11, modeStr.c_str());
     u8g2.drawHLine(0, 13, 128);
 
-    if (currentMode == Mode::DIV) {
-      u8g2.drawButtonUTF8(32, 40, U8G2_BTN_SHADOW1 | U8G2_BTN_HCENTER | U8G2_BTN_BW2, 34,  2,  2, "DIV");
-      u8g2.drawButtonUTF8(96, 40, U8G2_BTN_HCENTER | U8G2_BTN_BW2, 34,  2,  2, "DEG");
+    if (currentMode == Mode::DEG) {
+      u8g2.drawButtonUTF8(32, 40, U8G2_BTN_SHADOW1 | U8G2_BTN_HCENTER | U8G2_BTN_BW2, 34,  2,  2, "DEG");
+      u8g2.drawButtonUTF8(96, 40, U8G2_BTN_HCENTER | U8G2_BTN_BW2, 34,  2,  2, "DIV");
     } else {
-      u8g2.drawButtonUTF8(32, 40, U8G2_BTN_HCENTER | U8G2_BTN_BW2, 34,  2,  2, "DIV");
-      u8g2.drawButtonUTF8(96, 40, U8G2_BTN_SHADOW1 | U8G2_BTN_HCENTER | U8G2_BTN_BW2, 34,  2,  2, "DEG");
+      u8g2.drawButtonUTF8(32, 40, U8G2_BTN_HCENTER | U8G2_BTN_BW2, 34,  2,  2, "DEG");
+      u8g2.drawButtonUTF8(96, 40, U8G2_BTN_SHADOW1 | U8G2_BTN_HCENTER | U8G2_BTN_BW2, 34,  2,  2, "DIV");
     }
   } while(u8g2.nextPage());
 }

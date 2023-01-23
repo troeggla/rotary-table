@@ -5,7 +5,7 @@
 #include "screen.h"
 
 class ModeSelectorScreen : public Screen {
-  Mode currentMode = Mode::DIV;
+  Mode currentMode = Mode::DEG;
   Mode selectedMode = Mode::NONE;
   void updateDisplay();
 
