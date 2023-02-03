@@ -21,7 +21,7 @@ void MainScreen::updateDisplayedAngle() {
 }
 
 void MainScreen::updateDisplay() {
-  auto u8g2 = context.getDisplay();
+  U8G2& u8g2 = context.getDisplay();
   u8g2.firstPage();
 
   do {
@@ -80,8 +80,8 @@ void MainScreen::updateDisplay() {
 }
 
 void MainScreen::draw() {
-  auto keypad = context.getKeypad();
-  auto stepper = context.getStepper();
+  Keypad& keypad = context.getKeypad();
+  NemaStepper& stepper = context.getStepper();
 
   char key = keypad.getKey();
 
@@ -113,7 +113,7 @@ void MainScreen::draw() {
 void MainScreen::fillCircleSegment() {
   double angle = round(this->angle);
 
-  auto u8g2 = context.getDisplay();
+  U8G2& u8g2 = context.getDisplay();
   u8g2.drawCircle(cx, cy, radius);
 
   if (angle >= 0 && angle < 90) {

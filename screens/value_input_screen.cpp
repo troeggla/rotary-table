@@ -1,7 +1,7 @@
 #include "value_input_screen.h"
 
 void ValueInputScreen::updateDisplay() {
-  auto u8g2 = context.getDisplay();
+  U8G2& u8g2 = context.getDisplay();
   u8g2.firstPage();
 
   do {
@@ -19,7 +19,7 @@ void ValueInputScreen::updateDisplay() {
 }
 
 void ValueInputScreen::draw() {
-  auto keypad = context.getKeypad();
+  Keypad& keypad = context.getKeypad();
   char key = keypad.getKey();
 
   switch (key) {

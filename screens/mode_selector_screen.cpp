@@ -1,7 +1,7 @@
 #include "mode_selector_screen.h"
 
 void ModeSelectorScreen::updateDisplay() {
-  auto u8g2 = context.getDisplay();
+  U8G2& u8g2 = context.getDisplay();
   u8g2.firstPage();
 
   do {
@@ -24,7 +24,7 @@ void ModeSelectorScreen::updateDisplay() {
 }
 
 void ModeSelectorScreen::draw() {
-  auto keypad = context.getKeypad();
+  Keypad& keypad = context.getKeypad();
   char key = keypad.getKey();
 
   if (key == '>' || key == '<') {
