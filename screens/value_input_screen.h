@@ -4,6 +4,7 @@
 #include "../util/types.h"
 #include "screen.h"
 #include "main_screen.h"
+#include "mode_selector_screen.h"
 
 class ValueInputScreen : public Screen {
   Mode mode;

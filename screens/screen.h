@@ -1,9 +1,6 @@
 #ifndef SCREEN_H
 #define SCREEN_H
 
-#include <Keypad.h>
-#include <U8g2lib.h>
-
 #include "../context/application_context.h"
 
 class Screen {

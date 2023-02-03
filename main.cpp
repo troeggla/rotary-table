@@ -12,6 +12,7 @@
 
 #include "util/types.h"
 #include "stepper/nema_stepper.h"
+#include "context/application_context.h"
 #include "controller/screen_controller.h"
 
 #define LCD_CLK 13

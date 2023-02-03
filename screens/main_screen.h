@@ -1,13 +1,9 @@
 #ifndef MAINSCREEN_H
 #define MAINSCREEN_H
 
-#include <Arduino.h>
-#include <U8g2lib.h>
-
 #include "../util/types.h"
-#include "../stepper/nema_stepper.h"
-#include "../controller/screen_controller.h"
 #include "screen.h"
+#include "mode_selector_screen.h"
 
 class MainScreen : public Screen {
   double angle = 0;
@@ -28,10 +24,7 @@ class MainScreen : public Screen {
   void updateDisplayedAngle();
 
 public:
-  MainScreen(ApplicationContext& context, Mode mode, double increment) :
-    Screen(context),
-    mode(mode),
-    increment(increment) {
+  MainScreen(ApplicationContext& context, Mode mode, double increment) : Screen(context), mode(mode), increment(increment) {
     if (mode == Mode::DEG) {
       angleIncrement = increment;
     } else {
