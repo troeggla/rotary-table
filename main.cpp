@@ -41,7 +41,8 @@ Keypad keypad = Keypad(makeKeymap(keys), rowPins, colPins, NUM_ROWS, NUM_COLS);
 U8G2_ST7920_128X64_1_SW_SPI u8g2 = U8G2_ST7920_128X64_1_SW_SPI(U8G2_R0, LCD_CLK, LCD_DATA, LCD_CS);
 NemaStepper stepper = NemaStepper(DRV_STEP, DRV_DIR, REVOLUTION * GEARREDUCTION);
 
-ScreenController controller = ScreenController(u8g2, keypad, stepper);
+ApplicationContext context = ApplicationContext(u8g2, keypad, stepper);
+ScreenController controller = ScreenController(context);
 
 void setup() {
   controller.initialize();

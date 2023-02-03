@@ -7,17 +7,14 @@
 #include "../screens/mode_selector_screen.h"
 
 class ScreenController {
-  ApplicationContext* context;
+  ApplicationContext& context;
   Screen* currentScreen;
 
 public:
-  ScreenController(U8G2& display, Keypad& keypad, NemaStepper& stepper) {
-    context = new ApplicationContext(display, keypad, stepper);
-  }
+  ScreenController(ApplicationContext &context) : context(context) {}
 
   ~ScreenController() {
     delete currentScreen;
-    delete context;
   }
 
   void initialize();
