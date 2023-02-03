@@ -73,6 +73,10 @@ double ValueInputScreen::getSelectedValue() {
 }
 
 Screen* ValueInputScreen::getNextScreen() {
+  if (reset) {
+    return new ModeSelectorScreen(context);
+  }
+
   double value = getSelectedValue();
 
   if (value != -1) {

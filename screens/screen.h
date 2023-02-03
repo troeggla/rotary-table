@@ -15,10 +15,6 @@ public:
   Screen(ApplicationContext& context): context(context) {}
   virtual ~Screen() {}
 
-  bool isReset() {
-    return reset;
-  }
-
   virtual void draw() = 0;
   virtual Screen* getNextScreen() = 0;
 };

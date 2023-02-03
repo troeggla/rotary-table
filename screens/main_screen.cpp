@@ -197,5 +197,9 @@ void MainScreen::fillCircleSegment() {
 }
 
 Screen* MainScreen::getNextScreen() {
+  if (reset) {
+    return new ModeSelectorScreen(context);
+  }
+
   return 0;
 }
