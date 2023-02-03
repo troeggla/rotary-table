@@ -24,14 +24,7 @@ class MainScreen : public Screen {
   void updateDisplayedAngle();
 
 public:
-  MainScreen(ApplicationContext& context, Mode mode, double increment) : Screen(context), mode(mode), increment(increment) {
-    if (mode == Mode::DEG) {
-      angleIncrement = increment;
-    } else {
-      angleIncrement = 360 / increment;
-      divisions = (int)increment;
-    }
-  }
+  MainScreen(ApplicationContext& context, Mode mode, double increment);
 
   virtual void draw();
   virtual Screen* getNextScreen();

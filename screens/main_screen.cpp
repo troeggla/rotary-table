@@ -1,5 +1,14 @@
 #include "main_screen.h"
 
+MainScreen::MainScreen(ApplicationContext& context, Mode mode, double increment) : Screen(context), mode(mode), increment(increment) {
+  if (mode == Mode::DEG) {
+    angleIncrement = increment;
+  } else {
+    angleIncrement = 360 / increment;
+    divisions = (int)increment;
+  }
+}
+
 void MainScreen::updateDisplayedAngle() {
   if (direction == Direction::FWD) {
     angle += angleIncrement;

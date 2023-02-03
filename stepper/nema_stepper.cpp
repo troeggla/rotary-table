@@ -1,5 +1,13 @@
 #include "nema_stepper.h"
 
+NemaStepper::NemaStepper(int stepPin, int dirPin, long stepsPerRotation) : stepsPerRotation(stepsPerRotation) {
+  stepper = AccelStepper(1, stepPin, dirPin);
+
+  stepper.setMaxSpeed(2000);
+  stepper.setSpeed(1600);
+  stepper.setAcceleration(400);
+}
+
 void NemaStepper::runStepper(long steps) {
   stepper.moveTo(steps);
 
