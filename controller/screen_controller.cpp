@@ -1,32 +1,20 @@
 #include "screen_controller.h"
 
 void ScreenController::initialize() {
-  display.begin();
+  context->getDisplay().begin();
+  currentScreen = new ModeSelectorScreen(*context);
 }
 
 void ScreenController::draw() {
   if (currentScreen->isReset()) {
     delete currentScreen;
-    currentScreen = new ModeSelectorScreen(display, keypad);
+    currentScreen = new ModeSelectorScreen(*context);
   }
 
-  if (currentScreen->getName().compareTo("ModeSelectorScreen") == 0) {
-    Mode selectedMode = ((ModeSelectorScreen*)currentScreen)->getSelectedMode();
-
-    if (selectedMode != Mode::NONE) {
-      delete currentScreen;
-      currentScreen = new ValueInputScreen(display, keypad, selectedMode);
-    }
-  }
-
-  if (currentScreen->getName().compareTo("ValueInputScreen") == 0) {
-    double selectedValue = ((ValueInputScreen*)currentScreen)->getSelectedValue();
-    Mode mode = ((ValueInputScreen*)currentScreen)->getMode();
-
-    if (selectedValue != -1) {
-      delete currentScreen;
-      currentScreen = new MainScreen(display, keypad, stepper, mode, selectedValue);
-    }
+  Screen* nextScreen = currentScreen->getNextScreen();
+  if (nextScreen != 0) {
+    delete currentScreen;
+    currentScreen = nextScreen;
   }
 
   currentScreen->draw();

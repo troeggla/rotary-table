@@ -1,9 +1,5 @@
 #include "main_screen.h"
 
-String MainScreen::getName() {
-  return "MainScreen";
-}
-
 void MainScreen::updateDisplayedAngle() {
   if (direction == Direction::FWD) {
     angle += angleIncrement;
@@ -25,6 +21,7 @@ void MainScreen::updateDisplayedAngle() {
 }
 
 void MainScreen::updateDisplay() {
+  auto u8g2 = context.getDisplay();
   u8g2.firstPage();
 
   do {
@@ -83,6 +80,9 @@ void MainScreen::updateDisplay() {
 }
 
 void MainScreen::draw() {
+  auto keypad = context.getKeypad();
+  auto stepper = context.getStepper();
+
   char key = keypad.getKey();
 
   if (key == KEY_RST) {
@@ -112,6 +112,8 @@ void MainScreen::draw() {
 
 void MainScreen::fillCircleSegment() {
   double angle = round(this->angle);
+
+  auto u8g2 = context.getDisplay();
   u8g2.drawCircle(cx, cy, radius);
 
   if (angle >= 0 && angle < 90) {
@@ -192,4 +194,8 @@ void MainScreen::fillCircleSegment() {
   } else {
     u8g2.drawLine(cx, cy, cx, cy - radius);
   }
+}
+
+Screen* MainScreen::getNextScreen() {
+  return 0;
 }

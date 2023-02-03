@@ -1,10 +1,7 @@
 #include "value_input_screen.h"
 
-String ValueInputScreen::getName() {
-  return "ValueInputScreen";
-}
-
 void ValueInputScreen::updateDisplay() {
+  auto u8g2 = context.getDisplay();
   u8g2.firstPage();
 
   do {
@@ -22,6 +19,7 @@ void ValueInputScreen::updateDisplay() {
 }
 
 void ValueInputScreen::draw() {
+  auto keypad = context.getKeypad();
   char key = keypad.getKey();
 
   switch (key) {
@@ -54,10 +52,6 @@ void ValueInputScreen::draw() {
   this->updateDisplay();
 }
 
-Mode ValueInputScreen::getMode() {
-  return mode;
-}
-
 double ValueInputScreen::getSelectedValue() {
   if (selectedValue == "") {
     return -1;
@@ -76,4 +70,14 @@ double ValueInputScreen::getSelectedValue() {
   }
 
   return parsedValue;
+}
+
+Screen* ValueInputScreen::getNextScreen() {
+  double value = getSelectedValue();
+
+  if (value != -1) {
+    return new MainScreen(context, mode, value);
+  }
+
+  return 0;
 }

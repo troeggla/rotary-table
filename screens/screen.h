@@ -4,14 +4,15 @@
 #include <Keypad.h>
 #include <U8g2lib.h>
 
+#include "../context/application_context.h"
+
 class Screen {
 protected:
-  U8G2& u8g2;
-  Keypad& keypad;
+  ApplicationContext& context;
   bool reset = false;
 
 public:
-  Screen(U8G2& u8g2, Keypad& keypad): u8g2(u8g2), keypad(keypad) {}
+  Screen(ApplicationContext& context): context(context) {}
   virtual ~Screen() {}
 
   bool isReset() {
@@ -19,7 +20,7 @@ public:
   }
 
   virtual void draw() = 0;
-  virtual String getName() = 0;
+  virtual Screen* getNextScreen() = 0;
 };
 
 #endif

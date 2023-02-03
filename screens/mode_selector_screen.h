@@ -3,18 +3,19 @@
 
 #include "../util/types.h"
 #include "screen.h"
+#include "value_input_screen.h"
 
 class ModeSelectorScreen : public Screen {
   Mode currentMode = Mode::DEG;
   Mode selectedMode = Mode::NONE;
+
   void updateDisplay();
 
 public:
-  ModeSelectorScreen(U8G2& u8g2, Keypad& keypad) : Screen(u8g2, keypad) {}
+  ModeSelectorScreen(ApplicationContext& context) : Screen(context) {}
 
-  Mode getSelectedMode();
   virtual void draw();
-  virtual String getName();
+  virtual Screen* getNextScreen();
 };
 
 #endif

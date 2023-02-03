@@ -1,14 +1,7 @@
 #include "mode_selector_screen.h"
 
-String ModeSelectorScreen::getName() {
-  return "ModeSelectorScreen";
-}
-
-Mode ModeSelectorScreen::getSelectedMode() {
-  return selectedMode;
-}
-
 void ModeSelectorScreen::updateDisplay() {
+  auto u8g2 = context.getDisplay();
   u8g2.firstPage();
 
   do {
@@ -31,6 +24,7 @@ void ModeSelectorScreen::updateDisplay() {
 }
 
 void ModeSelectorScreen::draw() {
+  auto keypad = context.getKeypad();
   char key = keypad.getKey();
 
   if (key == '>' || key == '<') {
@@ -42,4 +36,12 @@ void ModeSelectorScreen::draw() {
   }
 
   this->updateDisplay();
+}
+
+Screen* ModeSelectorScreen::getNextScreen() {
+  if (selectedMode != Mode::NONE) {
+    return new ValueInputScreen(context, selectedMode);
+  }
+
+  return 0;
 }

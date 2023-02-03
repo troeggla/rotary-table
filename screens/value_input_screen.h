@@ -3,6 +3,7 @@
 
 #include "../util/types.h"
 #include "screen.h"
+#include "main_screen.h"
 
 class ValueInputScreen : public Screen {
   Mode mode;
@@ -10,14 +11,13 @@ class ValueInputScreen : public Screen {
   String selectedValue = "";
 
   void updateDisplay();
+  double getSelectedValue();
 
 public:
-  ValueInputScreen(U8G2& u8g2, Keypad& keypad, Mode mode) : Screen(u8g2, keypad), mode(mode) {}
-  double getSelectedValue();
-  Mode getMode();
+  ValueInputScreen(ApplicationContext& context, Mode mode) : Screen(context), mode(mode) {}
 
-  virtual String getName();
   virtual void draw();
+  virtual Screen* getNextScreen();
 };
 
 #endif

@@ -6,6 +6,7 @@
 
 #include "../util/types.h"
 #include "../stepper/nema_stepper.h"
+#include "../controller/screen_controller.h"
 #include "screen.h"
 
 class MainScreen : public Screen {
@@ -14,7 +15,6 @@ class MainScreen : public Screen {
   int cx = 22;
   int cy = 22;
   bool isBusy = false;
-  NemaStepper& stepper;
   Mode mode;
   double increment;
   double angleIncrement;
@@ -28,9 +28,8 @@ class MainScreen : public Screen {
   void updateDisplayedAngle();
 
 public:
-  MainScreen(U8G2& u8g2, Keypad& keypad, NemaStepper& stepper, Mode mode, double increment) :
-    Screen(u8g2, keypad),
-    stepper(stepper),
+  MainScreen(ApplicationContext& context, Mode mode, double increment) :
+    Screen(context),
     mode(mode),
     increment(increment) {
     if (mode == Mode::DEG) {
@@ -42,7 +41,7 @@ public:
   }
 
   virtual void draw();
-  virtual String getName();
+  virtual Screen* getNextScreen();
 };
 
 #endif
