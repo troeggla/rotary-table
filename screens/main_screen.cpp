@@ -11,20 +11,20 @@ MainScreen::MainScreen(ApplicationContext& context, Mode mode, double increment)
 
 void MainScreen::updateDisplayedAngle() {
   if (direction == Direction::FWD) {
-    angle += angleIncrement;
+    currentAngle += angleIncrement;
 
     if (mode == Mode::DIV && (currentDivision == divisions || currentDivision == 0)) {
-      angle = 0;
-    } else if (angle >= 360) {
-      angle -= 360;
+      currentAngle = 0;
+    } else if (currentAngle >= 360) {
+      currentAngle -= 360;
     }
   } else if (direction == Direction::BWD) {
-    angle -= angleIncrement;
+    currentAngle -= angleIncrement;
 
     if (mode == Mode::DIV && (currentDivision == divisions || currentDivision == 0)) {
-      angle = 0;
-    } else if (angle < 0) {
-      angle = 360 + angle;
+      currentAngle = 0;
+    } else if (currentAngle < 0) {
+      currentAngle = 360 + currentAngle;
     }
   }
 }
@@ -36,7 +36,7 @@ void MainScreen::updateDisplay() {
   do {
     u8g2.setFont(u8g2_font_6x13_tr);
 
-    String angle = String(this->angle);
+    String angle = String(this->currentAngle);
     int width = u8g2.getStrWidth(angle.c_str());
     u8g2.drawStr(22 - width/2, 59, angle.c_str());
 
@@ -120,7 +120,7 @@ void MainScreen::draw() {
 }
 
 void MainScreen::fillCircleSegment() {
-  double angle = round(this->angle);
+  double angle = round(this->currentAngle);
 
   U8G2& u8g2 = context.getDisplay();
   u8g2.drawCircle(cx, cy, radius);

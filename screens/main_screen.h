@@ -6,18 +6,22 @@
 #include "mode_selector_screen.h"
 
 class MainScreen : public Screen {
-  double angle = 0;
   int radius = 20;
   int cx = 22;
   int cy = 22;
+
   bool isBusy = false;
-  Mode mode;
-  double increment;
+
   double angleIncrement;
+  double currentAngle = 0;
+
   int divisions;
   int currentDivision = 0;
 
   Direction direction = Direction::NONE;
+
+  Mode mode;
+  double increment;
 
   void fillCircleSegment();
   void updateDisplay();
