@@ -35,6 +35,9 @@ void ValueInputScreen::draw() {
   case '9':
     currentValue += key;
     break;
+  case '.':
+    currentValue += (mode == Mode::DEG) ? "." : "";
+    break;
   case KEY_OK:
     selectedValue = currentValue;
     break;
@@ -43,10 +46,6 @@ void ValueInputScreen::draw() {
     break;
   case KEY_RST:
     reset = true;
-  }
-
-  if (mode == Mode::DEG && key == '.') {
-    currentValue += ".";
   }
 
   this->updateDisplay();
