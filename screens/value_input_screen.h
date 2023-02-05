@@ -10,6 +10,7 @@ class ValueInputScreen : public Screen {
   Mode mode;
   String currentValue;
   String selectedValue = "";
+  bool hasComma = false;
 
   void updateDisplay();
   double getSelectedValue();

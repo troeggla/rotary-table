@@ -36,13 +36,17 @@ void ValueInputScreen::draw() {
     currentValue += key;
     break;
   case '.':
-    currentValue += (mode == Mode::DEG) ? "." : "";
+    if (mode == Mode::DEG && !hasComma) {
+      currentValue += ".";
+      hasComma = true;
+    }
     break;
   case KEY_OK:
     selectedValue = currentValue;
     break;
   case KEY_CLR:
     currentValue = "";
+    hasComma = false;
     break;
   case KEY_RST:
     reset = true;
