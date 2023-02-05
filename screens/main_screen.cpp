@@ -31,6 +31,8 @@ void MainScreen::updateDisplayedAngle() {
 
 void MainScreen::updateDisplay() {
   U8G2& u8g2 = context.getDisplay();
+  TableLockSensor& lockSensor = context.getLockSensor();
+
   u8g2.firstPage();
 
   do {
@@ -45,20 +47,27 @@ void MainScreen::updateDisplay() {
     u8g2.drawVLine(45, 0, 64);
     u8g2.drawHLine(0, 45, 45);
 
-    if (isBusy) {
-      String busy = "BUSY";
-      int width = u8g2.getStrWidth(busy.c_str());
-      u8g2.drawStr(87 - width/2, 13, busy.c_str());
+    if (lockSensor.isLocked()) {
+      String locked = "LOCKED";
+      int width = u8g2.getStrWidth(locked.c_str());
 
-      if (direction == Direction::FWD) {
-        u8g2.drawTriangle(119, 3, 124, 8, 119, 13);
-      } else if (direction == Direction::BWD) {
-        u8g2.drawTriangle(55, 3, 50, 8, 55, 13);
-      }
+      u8g2.drawStr(87 - width/2, 13, locked.c_str());
     } else {
-      String okStr = "OK";
-      int width = u8g2.getStrWidth(okStr.c_str());
-      u8g2.drawStr(87 - width/2, 13, okStr.c_str());
+      if (isBusy) {
+        String busy = "BUSY";
+        int width = u8g2.getStrWidth(busy.c_str());
+        u8g2.drawStr(87 - width/2, 13, busy.c_str());
+
+        if (direction == Direction::FWD) {
+          u8g2.drawTriangle(119, 3, 124, 8, 119, 13);
+        } else if (direction == Direction::BWD) {
+          u8g2.drawTriangle(55, 3, 50, 8, 55, 13);
+        }
+      } else {
+        String okStr = "OK";
+        int width = u8g2.getStrWidth(okStr.c_str());
+        u8g2.drawStr(87 - width/2, 13, okStr.c_str());
+      }
     }
 
     u8g2.drawHLine(46, 16, 82);
@@ -91,6 +100,7 @@ void MainScreen::updateDisplay() {
 void MainScreen::draw() {
   Keypad& keypad = context.getKeypad();
   NemaStepper& stepper = context.getStepper();
+  TableLockSensor& lockSensor = context.getLockSensor();
 
   char key = keypad.getKey();
 
@@ -98,7 +108,7 @@ void MainScreen::draw() {
     reset = true;
   }
 
-  if (key == '<' || key == '>') {
+  if ((key == '<' || key == '>') && !lockSensor.isLocked()) {
     direction = (key == '<') ? Direction::BWD : Direction::FWD;
     isBusy = true;
     this->updateDisplay();

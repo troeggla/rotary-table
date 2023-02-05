@@ -11,3 +11,7 @@ Keypad& ApplicationContext::getKeypad() {
 NemaStepper& ApplicationContext::getStepper() {
   return stepper;
 }
+
+TableLockSensor& ApplicationContext::getLockSensor() {
+  return lockSensor;
+}
