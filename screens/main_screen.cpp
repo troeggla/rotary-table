@@ -49,12 +49,13 @@ void MainScreen::updateDisplay() {
 
     if (lockSensor.isLocked()) {
       String locked = "LOCKED";
-      int width = u8g2.getStrWidth(locked.c_str());
 
+      int width = u8g2.getStrWidth(locked.c_str());
       u8g2.drawStr(87 - width/2, 13, locked.c_str());
     } else {
       if (isBusy) {
         String busy = "BUSY";
+
         int width = u8g2.getStrWidth(busy.c_str());
         u8g2.drawStr(87 - width/2, 13, busy.c_str());
 
@@ -64,9 +65,17 @@ void MainScreen::updateDisplay() {
           u8g2.drawTriangle(55, 3, 50, 8, 55, 13);
         }
       } else {
-        String okStr = "OK";
-        int width = u8g2.getStrWidth(okStr.c_str());
-        u8g2.drawStr(87 - width/2, 13, okStr.c_str());
+        if (mode == Mode::DIV && currentDivision == divisions) {
+          String doneStr = "DONE";
+
+          int width = u8g2.getStrWidth(doneStr.c_str());
+          u8g2.drawStr(87 - width/2, 13, doneStr.c_str());
+        } else {
+          String okStr = "READY";
+
+          int width = u8g2.getStrWidth(okStr.c_str());
+          u8g2.drawStr(87 - width/2, 13, okStr.c_str());
+        }
       }
     }
 
