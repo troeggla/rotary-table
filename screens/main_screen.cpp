@@ -229,6 +229,9 @@ void MainScreen::fillCircleSegment() {
 
 Screen* MainScreen::getNextScreen() {
   if (reset) {
+    TableLockSensor &lockSensor = context.getLockSensor();
+    lockSensor.setLedState(LOW);
+
     return new ModeSelectorScreen(context);
   }
 
