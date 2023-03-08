@@ -117,25 +117,28 @@ void MainScreen::draw() {
     reset = true;
   }
 
-  if ((key == '<' || key == '>') && !lockSensor.isLocked()) {
-    direction = (key == '<') ? Direction::BWD : Direction::FWD;
-    isBusy = true;
-    this->updateDisplay();
-
-    if (mode == Mode::DEG) {
-      stepper.runDegrees((direction == Direction::BWD) ? -increment : increment);
+  if (key == '<' || key == '>') {
+    if (lockSensor.isLocked()) {
+      lockSensor.flashLed();
     } else {
-      double degrees = 360 / increment;
-      stepper.runDegrees((direction == Direction:: BWD) ? -degrees : degrees);
-    }
+      direction = (key == '<') ? Direction::BWD : Direction::FWD;
+      isBusy = true;
+      this->updateDisplay();
 
-    currentDivision = (key == '<') ? currentDivision - 1 : currentDivision + 1;
-    this->updateDisplayedAngle();
-    isBusy = false;
-    this->updateDisplay();
-  } else {
-    this->updateDisplay();
+      if (mode == Mode::DEG) {
+        stepper.runDegrees((direction == Direction::BWD) ? -increment : increment);
+      } else {
+        double degrees = 360 / increment;
+        stepper.runDegrees((direction == Direction:: BWD) ? -degrees : degrees);
+      }
+
+      currentDivision = (key == '<') ? currentDivision - 1 : currentDivision + 1;
+      this->updateDisplayedAngle();
+      isBusy = false;
+    }
   }
+
+  this->updateDisplay();
 }
 
 void MainScreen::fillCircleSegment() {
