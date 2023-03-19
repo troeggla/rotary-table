@@ -47,8 +47,6 @@ void MainScreen::updateDisplay() {
     u8g2.drawVLine(45, 0, 64);
     u8g2.drawHLine(0, 45, 45);
 
-    lockSensor.updateLockLed();
-
     if (lockSensor.isLocked()) {
       String locked = "LOCKED";
 
@@ -118,6 +116,8 @@ void MainScreen::draw() {
   if (key == KEY_RST) {
     reset = true;
   }
+
+  lockSensor.updateLockLed();
 
   if (key == '<' || key == '>') {
     if (lockSensor.isLocked()) {
@@ -232,7 +232,7 @@ void MainScreen::fillCircleSegment() {
 Screen* MainScreen::getNextScreen() {
   if (reset) {
     TableLockSensor &lockSensor = context.getLockSensor();
-    lockSensor.setLedState(LOW);
+    lockSensor.resetLockSensor();
 
     return new ModeSelectorScreen(context);
   }

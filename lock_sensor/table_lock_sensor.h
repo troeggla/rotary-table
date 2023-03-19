@@ -15,8 +15,8 @@ public:
 
   bool isLocked();
   void updateLockLed();
-  void setLedState(uint8_t state);
   void flashLed();
+  void resetLockSensor();
 };
 
 #endif

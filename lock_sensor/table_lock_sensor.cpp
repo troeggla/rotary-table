@@ -9,8 +9,8 @@ bool TableLockSensor::isLocked() {
   return digitalRead(sensorPinNum) == lockedState;
 }
 
-void TableLockSensor::setLedState(uint8_t state) {
-  digitalWrite(ledPinNum, state);
+void TableLockSensor::resetLockSensor() {
+  digitalWrite(ledPinNum, LOW);
 }
 
 void TableLockSensor::updateLockLed() {
