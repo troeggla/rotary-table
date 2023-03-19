@@ -47,6 +47,8 @@ void MainScreen::updateDisplay() {
     u8g2.drawVLine(45, 0, 64);
     u8g2.drawHLine(0, 45, 45);
 
+    lockSensor.updateLockLed();
+
     if (lockSensor.isLocked()) {
       String locked = "LOCKED";
 
