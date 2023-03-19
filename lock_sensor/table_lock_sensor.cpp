@@ -1,6 +1,6 @@
 #include "table_lock_sensor.h"
 
-TableLockSensor::TableLockSensor(uint8_t sensorPinNum, uint8_t ledPinNum) : sensorPinNum(sensorPinNum), ledPinNum(ledPinNum) {
+TableLockSensor::TableLockSensor(uint8_t sensorPinNum, uint8_t ledPinNum, uint8_t lockedState) : sensorPinNum(sensorPinNum), ledPinNum(ledPinNum), lockedState(lockedState) {
   pinMode(sensorPinNum, INPUT_PULLUP);
   pinMode(ledPinNum, OUTPUT);
 
@@ -11,10 +11,14 @@ TableLockSensor::TableLockSensor(uint8_t sensorPinNum, uint8_t ledPinNum) : sens
 bool TableLockSensor::isLocked() {
   uint8_t lockState = digitalRead(sensorPinNum);
 
-  currentLedState = lockState;
-  digitalWrite(ledPinNum, currentLedState);
+  if (lockedState == HIGH) {
+    currentLedState = lockState;
+  } else {
+    currentLedState = lockState ^ 1;
+  }
 
-  return lockState == HIGH;
+  digitalWrite(ledPinNum, currentLedState);
+  return lockState == lockedState;
 }
 
 void TableLockSensor::setLedState(uint8_t state) {

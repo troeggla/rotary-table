@@ -2,15 +2,18 @@
 #define TABLE_LOCK_SENSOR
 
 #include <Arduino.h>
+#include "../util/types.h"
 
 class TableLockSensor {
-  uint8_t sensorPinNum;
-  uint8_t ledPinNum;
+  const uint8_t sensorPinNum;
+  const uint8_t ledPinNum;
+  const uint8_t lockedState;
 
   uint8_t currentLedState;
 
 public:
-  TableLockSensor(uint8_t sensorPinNum, uint8_t ledPinNum);
+  TableLockSensor(uint8_t sensorPinNum, uint8_t ledPinNum, uint8_t lockedState);
+  TableLockSensor(uint8_t sensorPinNum, uint8_t ledPinNum) : TableLockSensor(sensorPinNum, ledPinNum, HIGH) {};
 
   bool isLocked();
   void setLedState(uint8_t state);
