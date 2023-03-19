@@ -18,14 +18,7 @@ void TableLockSensor::setLedState(uint8_t state) {
 }
 
 void TableLockSensor::updateLockLed() {
-  uint8_t lockState = digitalRead(sensorPinNum);
-
-  if (lockedState == HIGH) {
-    currentLedState = lockState;
-  } else {
-    currentLedState = lockState ^ 1;
-  }
-
+  currentLedState = (isLocked()) ? HIGH : LOW;
   digitalWrite(ledPinNum, currentLedState);
 }
 
