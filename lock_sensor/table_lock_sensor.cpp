@@ -23,14 +23,12 @@ void TableLockSensor::updateLockLed() {
 }
 
 void TableLockSensor::flashLed() {
-  if (currentLedState == LOW) {
-    return;
-  }
-
-  for (int i=0; i<3; i++) {
-    digitalWrite(ledPinNum, LOW);
-    delay(100);
-    digitalWrite(ledPinNum, HIGH);
-    delay(100);
+  if (isLocked()) {
+    for (int i=0; i<3; i++) {
+      digitalWrite(ledPinNum, LOW);
+      delay(100);
+      digitalWrite(ledPinNum, HIGH);
+      delay(100);
+    }
   }
 }
