@@ -1,24 +1,6 @@
 #include "value_input_screen.h"
 
-void ValueInputScreen::updateDisplay() {
-  U8G2& u8g2 = context.getDisplay();
-  u8g2.firstPage();
-
-  do {
-    u8g2.setFont(u8g2_font_6x13_tr);
-
-    String titleStr = (mode == Mode::DIV) ? "Num. Divisions" : "Input Degrees";
-    int titleWidth = u8g2.getStrWidth(titleStr.c_str());
-
-    u8g2.drawStr(128/2 - titleWidth/2, 11, titleStr.c_str());
-    u8g2.drawHLine(0, 13, 128);
-
-    int valueWidth = u8g2.getStrWidth(currentValue.c_str());
-    u8g2.drawStr(128/2 - valueWidth/2, 40, currentValue.c_str());
-  } while(u8g2.nextPage());
-}
-
-void ValueInputScreen::draw() {
+void ValueInputScreen::processKeypress() {
   Keypad& keypad = context.getKeypad();
   char key = keypad.getKey();
 
@@ -51,8 +33,26 @@ void ValueInputScreen::draw() {
   case KEY_RST:
     reset = true;
   }
+}
 
-  this->updateDisplay();
+void ValueInputScreen::draw() {
+  this->processKeypress();
+
+  U8G2& u8g2 = context.getDisplay();
+  u8g2.firstPage();
+
+  do {
+    u8g2.setFont(u8g2_font_6x13_tr);
+
+    String titleStr = (mode == Mode::DIV) ? "Num. Divisions" : "Input Degrees";
+    int titleWidth = u8g2.getStrWidth(titleStr.c_str());
+
+    u8g2.drawStr(128/2 - titleWidth/2, 11, titleStr.c_str());
+    u8g2.drawHLine(0, 13, 128);
+
+    int valueWidth = u8g2.getStrWidth(currentValue.c_str());
+    u8g2.drawStr(128/2 - valueWidth/2, 40, currentValue.c_str());
+  } while(u8g2.nextPage());
 }
 
 double ValueInputScreen::getSelectedValue() {

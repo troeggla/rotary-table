@@ -12,7 +12,7 @@ class ValueInputScreen : public Screen {
   String selectedValue = "";
   bool hasComma = false;
 
-  void updateDisplay();
+  void processKeypress();
   double getSelectedValue();
 
 public:
