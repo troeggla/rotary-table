@@ -14,9 +14,10 @@ public:
   TableLockSensor(uint8_t sensorPinNum, uint8_t ledPinNum) : TableLockSensor(sensorPinNum, ledPinNum, HIGH) {};
 
   bool isLocked();
+  void resetLockSensor();
   void updateLockLed();
   void flashLed();
-  void resetLockSensor();
+  void turnOnLockLed();
 };
 
 #endif

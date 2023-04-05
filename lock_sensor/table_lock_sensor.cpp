@@ -17,6 +17,10 @@ void TableLockSensor::updateLockLed() {
   digitalWrite(ledPinNum, (isLocked()) ? HIGH : LOW);
 }
 
+void TableLockSensor::turnOnLockLed() {
+  digitalWrite(ledPinNum, HIGH);
+}
+
 void TableLockSensor::flashLed() {
   if (isLocked()) {
     for (int i=0; i<3; i++) {
