@@ -127,12 +127,16 @@ void MainScreen::draw() {
       isBusy = true;
       this->updateDisplay();
 
+      lockSensor.turnOnLockLed();
+
       if (mode == Mode::DEG) {
         stepper.runDegrees((direction == Direction::BWD) ? -increment : increment);
       } else {
         double degrees = 360 / increment;
         stepper.runDegrees((direction == Direction:: BWD) ? -degrees : degrees);
       }
+
+      lockSensor.updateLockLed();
 
       currentDivision = (key == '<') ? currentDivision - 1 : currentDivision + 1;
       this->updateDisplayedAngle();
